@@ -1,0 +1,28 @@
+#include <iostream>
+#include <csignal>
+#include <cstdlib>
+#include <unistd.h>
+
+using namespace std;
+
+int main(int arg_count, char *arg_values[])
+{
+    if (arg_count != 3)
+    {
+        cerr << arg_values[0] << "  <signal_number>  <PID>" << endl;
+        return 1;
+    }
+
+    int signal_number = atoi(arg_values[1]);
+    pid_t process_id = atoi(arg_values[2]);
+
+    if (kill(process_id, signal_number) == -1)
+    {
+        perror("Error ");
+        return 1;
+    }
+
+    cout << "Signal " << signal_number << " sent to PID " << process_id << endl;
+
+    return 0;
+}
