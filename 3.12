@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cstdlib>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <cstring>
+
+int main() {
+    const char *shared_memory_name = "/my_shared_memory";
+    int shared_memory_fd = shm_open(shared_memory_name, O_RDWR, 0666);
+
+    if (shared_memory_fd == -1) {
+        perror("404");
+        exit(EXIT_FAILURE);
+    }
+
+    if (close(shared_memory_fd) == -1) {
+        perror("404");
+        exit(EXIT_FAILURE);
+    }
+
+    if (shm_unlink(shared_memory_name) == -1) {
+        perror("404");
+        exit(EXIT_FAILURE);
+    }
+
+    return 0;
+}
